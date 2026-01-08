@@ -71,7 +71,7 @@ app.put('/editrecipe/:id', async (req, res) => {
             `UPDATE defaultdb.recipes 
              SET recipe_name = COALESCE(?, recipe_name),
                  cuisine = COALESCE(?, cuisine),
-                 prep_time = COALESCE(?, prep_time),
+                 prep_time = COALESCE(?, prep_time)
              WHERE id = ?`,
             [recipe_name ?? null, cuisine ?? null, prep_time ?? null, id]
         );
@@ -86,6 +86,7 @@ app.put('/editrecipe/:id', async (req, res) => {
         res.status(500).json({ message: 'Server error - could not update recipe id ' + id });
     }
 });
+
 
 // Route: Delete a recipe
 app.delete('/deleterecipe/:id', async (req, res) => {
