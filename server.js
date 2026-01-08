@@ -57,27 +57,21 @@ app.put('/editrecipe/:id', async (req, res) => {
     const { id } = req.params;
     const { recipe_name, cuisine, prep_time } = req.body;
 
-    // Check if there is anything to update
     if (recipe_name === undefined && cuisine === undefined && prep_time === undefined) {
         return res.status(400).json({ message: 'Nothing to update' });
     }
 
     try {
-        // Create a database connection
         const connection = await mysql.createConnection(dbConfig);
-
-        // Update the recipe
         const [result] = await connection.execute(
             'UPDATE defaultdb.recipes SET recipe_name = ?, cuisine = ?, prep_time = ? WHERE id = ?',
             [recipe_name, cuisine, prep_time, id]
         );
 
-        // Check if any row was updated
         if (result.affectedRows === 0) {
             return res.status(404).json({ message: 'Recipe not found' });
         }
 
-        // Success response
         res.json({ message: 'Recipe id ' + id + ' updated successfully' });
     } catch (err) {
         console.error(err);
