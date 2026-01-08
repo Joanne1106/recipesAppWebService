@@ -29,7 +29,7 @@ app.listen(port, () => {
 // Route: Get all recipes
 app.get('/allrecipes', async (req, res) => {
     try {
-        let connection = mysql.createConnection(dbConfig);
+        let connection = await mysql.createConnection(dbConfig);
         const [rows] = await connection.execute('SELECT * FROM defaultdb.recipes');
         res.json(rows);
     } catch (err) {
