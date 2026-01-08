@@ -44,7 +44,7 @@ app.post('/addrecipe', async (req, res) => {
 
     try {
         let connection = await mysql.createConnection(dbConfig);
-        await connection.execute('INSERT INTO recipes (recipe_name, cuisine, prep_time) VALUES (?, ?, ?)', [recipe_name, cuisine, prep_time]);
+        await connection.execute('INSERT INTO recipes (recipe_name, cuisine, prep_time) VALUES (?, ?, ?)', [recipe_name, cuisine, Number(prep_time)]);
         res.status(201).json({message: 'Recipe ' + recipe_name + ' added successfully'});
     } catch (err) {
         console.error(err);
