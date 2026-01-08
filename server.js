@@ -68,12 +68,8 @@ app.put('/editrecipe/:id', async (req, res) => {
     try {
         const connection = await mysql.createConnection(dbConfig);
         const [result] = await connection.execute(
-            `UPDATE defaultdb.recipes 
-             SET recipe_name = COALESCE(?, recipe_name),
-                 cuisine = COALESCE(?, cuisine),
-                 prep_time = COALESCE(?, prep_time)
-             WHERE id = ?`,
-            [recipe_name ?? null, cuisine ?? null, prep_time ?? null, id]
+            'UPDATE defaultdb.recipes SET recipe_name = ?, cuisine = ?, prep_time = ? WHERE id = ?',
+            [recipe_name, cuisine, Number(prep_time), id]
         );
 
         if (result.affectedRows === 0) {
